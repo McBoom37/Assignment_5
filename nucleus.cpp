@@ -10,7 +10,7 @@
 
 int main()
 {
-  StableNucleus Fe{56, 26, "Fe"};
+  StableNucleus Fe{56, 26, "Fe"}; //instantiating the nuclei
   RadioactiveNucleus Co{60, 27, "Co", 5.27, false, nullptr};
   RadioactiveNucleus Na{23, 11, "Na", 2.6, false, nullptr};
   RadioactiveNucleus Cs{137, 55, "Cs", 30.17, false, nullptr};
@@ -20,7 +20,7 @@ int main()
   Na.print_data();
   Cs.print_data();
 
-  Co.decay(Co);
+  Co.decay(Co); //testing the decay function
   Cs.decay(Cs);
   Na.decay(Na);
 

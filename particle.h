@@ -1,3 +1,7 @@
+//11011183 05/04/2025
+//particle class which defines the particle class and derived photon and electron classes
+//data members and friend functions are defined as well
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -118,7 +122,7 @@ public:
 
   Photon compton_scattering(Photon &p) //compton scattering 
   {
-    double E = photoelectric_effect(p);
+    double E = photoelectric_effect(p); //states energy before and after scattering 
     double m = 0.511;
     double E_prime = E/(1 + E/m); //theta set to 90 degrees for simplicity 
     std::cout<<"Photon energy after compton scattering: "<<E_prime<<" MeV"<<std::endl;
@@ -155,7 +159,7 @@ class Electron : public Particle
 private:
   std::vector<std::shared_ptr<Photon>> radiation;
 public:
-  Electron() : Particle{}, radiation{} {}
+  Electron() : Particle{}, radiation{} {} //constructors 
   Electron(double m, double e) : Particle{m,e}, radiation{} {}
   Electron(double m, double e, std::vector<std::shared_ptr<Photon>> rad) : Particle{m,e}, radiation{rad} {}
   Electron(const Electron &e) : Particle{e.rest_mass, e.energy}, radiation{e.radiation} {}
@@ -189,7 +193,7 @@ public:
     if(e < rest_mass)
     {
       std::cout<<"Error: energy cannot be less than rest mass"<<std::endl;
-      energy = rest_mass;
+      energy = rest_mass; //checking the energy 
     }
     else
     {
@@ -222,7 +226,7 @@ public:
 
       std::shared_ptr<Photon> p = e.radiation.back();
       e.radiation.insert(e.radiation.begin(), p); //inserts the new photon at the start of the vector so its the last to be radiated
-      std::cout<<"Radiating photon with energy: "<<p->get_energy()<<std::endl;
+      std::cout<<"Radiating photon with energy: "<<p->get_energy()<<" MeV"<<std::endl;
       return *p;
     }
   }
