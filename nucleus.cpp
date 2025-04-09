@@ -15,16 +15,14 @@ int main()
   RadioactiveNucleus Na{23, 11, "Na", 2.6, false, nullptr};
   RadioactiveNucleus Cs{137, 55, "Cs", 30.17, false, nullptr};
 
-  Photon photon(0.0, 10.0, std::vector<std::shared_ptr<Electron>>{});
-
   Fe.print_data();
   Co.print_data();
   Na.print_data();
   Cs.print_data();
 
   Co.decay(Co);
-
-
+  Cs.decay(Cs);
+  Na.decay(Na);
 
   return 0;
 }

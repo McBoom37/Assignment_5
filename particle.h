@@ -112,7 +112,7 @@ public:
   double photoelectric_effect(const Photon &p) //photoelectric effect
   {
     energy = p.energy;
-    std::cout<<"Photon energy: "<<energy<<std::endl;
+    std::cout<<"Photon energy: "<<energy<<" MeV"<<std::endl;
     return energy;
   }
 
@@ -208,17 +208,22 @@ public:
 
   Photon radiate(Electron &e) //radation function which returns a photon 
   {
-    if(e.radiation.empty())
+    if(e.radiation.empty() && e.energy < 0.511) //ensures that the electron cannot radiate indefinitely
     {
       std::cout<<"Error: No radiation to emit"<<std::endl;
       return Photon{0,0, std::vector<std::shared_ptr<Electron>> {}}; // Return a default photon if no radiation is available
     }
     else
     {
+      double E_new = e.energy - 0.511;
+      std::shared_ptr<Photon> p_new = std::make_shared<Photon>(0, E_new, std::vector<std::shared_ptr<Electron>>{});
+      e.radiation.push_back(p_new); 
+      //new photon created to ensure that an electron has to radiate if it has extra energy
+
       std::shared_ptr<Photon> p = e.radiation.back();
-      e.radiation.pop_back();
+      e.radiation.insert(e.radiation.begin(), p); //inserts the new photon at the start of the vector so its the last to be radiated
       std::cout<<"Radiating photon with energy: "<<p->get_energy()<<std::endl;
-      return *p; //electron can radiate one photon at a time, and will radiate until it cannot anymore (so it will produce empty photons)
+      return *p;
     }
   }
 
